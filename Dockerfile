@@ -1,15 +1,14 @@
 FROM php:8.4-cli
 
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
     git \
     unzip \
     curl \
     libzip-dev \
     zip \
-    && rm -rf /var/lib/apt/lists/*
+    default-mysql-client
 
-RUN docker-php-ext-install zip
+RUN docker-php-ext-install zip pdo pdo_mysql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
